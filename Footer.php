@@ -1,1 +1,1 @@
-<div id="footer">  &copy; 2023 Online Clothing Store</div>
+<div id="footer">  &copy; 2023 Online Clothing Store</a></div>

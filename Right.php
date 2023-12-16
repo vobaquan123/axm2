@@ -1,51 +1,62 @@
-
-<div id="right-col">
-    
-
+<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
+ <div id="right-col">
+    <h2>Login</h2>
     <div class="scroll">
-       <ul class="side">
-           <?php
-
-$con = mysqli_connect("localhost","root", "", "shopping");
-
-$sql = "select * from Category_Master";
-
-$result = mysqli_query($con, $sql);
-
-while($row = mysqli_fetch_array($result))
-{
-$Id=$row['CategoryId'];
-$CategoryName=$row['CategoryName'];
-
-
-?>
-     <li><a href="Products.php?CategoryId=<?php echo $Id;?>"><?php echo $CategoryName;?></a></li>
-    
-    <?php
-	}
-
-mysqli_close($con);
-?>
-    </ul>
-    
+      <form name="form1" method="post" action="login.php">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td height="26">User Name:</td>
+          </tr>
+          <tr>
+          <td height="30"><span id="sprytextfield1">
+            <label>
+            <input type="text" name="txtUserName" size="18" id="txtUserName" />
+            </label>
+            <span class="textfieldRequiredMsg">A value is required.</span></span></td>
+          </tr>
+          <tr>
+            <td height="26">Password:</td>
+          </tr>
+          <tr>
+            <td height="31"><span id="sprytextfield2">
+          <label>
+              <input type="password" name="txtPassword" size="18" id="txtPassword">
+              </label>
+            <span class="textfieldRequiredMsg">*</span></span></td>
+          </tr>
+          <tr>
+            <td height="29">User Type:</td>
+          </tr>
+          <tr>
+            <td><p>
+              <label>
+                <input type="radio" name="rdType" value="Admin" id="rdType_0" required>
+                Admin</label>
+              <br>
+              <label>
+                <input type="radio" name="rdType" value="Customer" id="rdType_1">
+                Customer</label>
+              <br>
+            </p></td>
+          </tr>
+          <tr>
+            <td>              
+                <center><input type="submit" name="button" id="button" style="margin-top:-10px;" value="Login"></center>
+			</td>			
+          </tr>
+        </table>
+      </form>
   </div>
-   
-    <ul class="side">
-      <table width="100%" height="122" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-          <td><div align="center"><a href="checkout.php">Procced To Checkout</a></div></td>
-        </tr>
-        <tr>
-          <td><div align="center"><img src="img/checkout.png" width="32" height="32" /></div></td>
-        </tr>
-        <tr>
-          <td><div align="center"><a href="History.php">Order History</a></div></td>
-        </tr>
-        <tr>
-          <td><div align="center"><img src="img/order.png" width="32" height="32" /></div></td>
-        </tr>
-      </table>
-  </ul>
+    <h2>&nbsp;</h2>
+   <ul class="side">
+    
+    </ul>
    
 </div>
- 
+ <script type="text/javascript">
+<!--
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+//-->
+</script>

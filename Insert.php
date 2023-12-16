@@ -7,42 +7,32 @@
 
 <body>
 <?php
-	session_start();
-	$Id=$_GET['Id'];
 
-$con = mysqli_connect("localhost","root", "", "shopping");
-
-$sql = "select * from Item_Master where ItemId=".$Id."";
-
-$result = mysqli_query($con, $sql);
-
-while($row = mysqli_fetch_array($result))
-{
-$Id=$row['ItemId'];
-$Name=$row['ItemName'];
-$Description=$row['Description'];
-$Size=$row['Size'];
-$Price=$row['Price'];
-$Discount=$row['Discount'];
-$Total=$row['Total'];
-$Image=$row['Image'];
-}
-	$Qty=$_POST['txtQty'];
-	$CID=$_SESSION['ID'];
-	$ODate= date('y/m/d');
-	$Net=$Total*$Qty;
-	mysqli_close ($con);
+	$Name=$_POST['txtName'];
+	$Address=$_POST['txtAddress'];
+	$City=$_POST['cmbCity'];
+	
+	$Email=$_POST['txtEmail'];
+	$Mobile=$_POST['txtMobile'];
+	$Gender=$_POST['rdGender'];
+	$BirthDate=$_POST['txtDate'];
+	
+	$UserName=$_POST['txtUserName'];
+	$Password=$_POST['txtPassword'];
 	
 	
 	
+	
+
 	$con = mysqli_connect ("localhost","root", "", "shopping");
 
-	$sql = "insert into Shopping_Cart(CustomerId,ItemName,Quantity,Price,Total,OrderDate) values(".$CID.",'".$Name."',".$Qty.",".$Total.",".$Net.",".$ODate.")";
+	$sql = "insert into customer_registration(CustomerName,Address,City,Email,Mobile,Gender,BirthDate,UserName,Password) values('".$Name."','".$Address."','".$City."','".$Email."',".$Mobile.",'".$Gender."','".$BirthDate."','".$UserName."','".$Password."')";
 
 	mysqli_query ($con, $sql);
-	
+
 	mysqli_close ($con);
-	echo '<script type="text/javascript">alert("Item Added To the cart");window.location=\'Products.php\';</script>';
+	
+	echo '<script type="text/javascript">alert("Registration Completed Succesfully");window.location=\'index.php\';</script>';
 
 ?>
 </body>

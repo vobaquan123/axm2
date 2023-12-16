@@ -1,16 +1,15 @@
-<?php require_once('../Connections/shop.php'); ?>
 <?php require_once('Connections/shop.php'); ?>
 <?php
-session_start();
 if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "")
 {
   $theValue = stripslashes($theValue);
+
 
   switch ($theType) {
     case "text":
       $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
+      break;
     case "long":
     case "int":
       $theValue = ($theValue != "") ? intval($theValue) : "NULL";
@@ -34,13 +33,12 @@ if (isset($_GET['CategoryId'])) {
   $colname_Recordset1 = $_GET['CategoryId'];
 }
 
-$query_Recordset1 = sprintf("SELECT ItemId, ItemName, `Description`, `Size`, Image, Price, Discount, Total FROM item_master WHERE CategoryId = %s", GetSQLValueString($colname_Recordset1, "int"));
+$query_Recordset1 = sprintf("SELECT ItemName, `Description`, `Size`, Image, Price, Discount, Total FROM item_master WHERE CategoryId = %s", GetSQLValueString($colname_Recordset1, "int"));
 $Recordset1 = mysqli_query($shop, $query_Recordset1) or die(mysqli_error());
 $row_Recordset1 = mysqli_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysqli_num_rows($Recordset1);
 
-
-$query_Recordset2 = "SELECT ItemId, ItemName, `Description`, `Size`, Image, Price, Discount, Total FROM item_master";
+$query_Recordset2 = "SELECT ItemName, `Description`, `Size`, Image, Price, Discount, Total FROM item_master";
 $Recordset2 = mysqli_query($shop, $query_Recordset2) or die(mysqli_error());
 $row_Recordset2 = mysqli_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
@@ -62,16 +60,15 @@ $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
 </head>
 <body>
 <div id="wrapper">
-  
+
   <?php
   include "Header.php";
   ?>
-  
+
   <div id="content">
-    <h2><span style="color:#003300">Welcome <?php echo $_SESSION['Name'];?></span></h2>
-    <table width="100%" border="1" cellpadding="2" cellspacing="2" bordercolor="#669933">
+    <h2><span style="color:#003300"> Products</span></h2>
+    <table width="100%" border="1" cellpadding="2" cellspacing="2">
       <tr>
-      <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Code</span></td>
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">ItemName</span></td>
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Description</span></td>
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Size</span></td>
@@ -79,49 +76,46 @@ $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Price</span></td>
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Discount</span></td>
         <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Total</span></td>
-        <td bordercolor="#669933" bgcolor="#669933"><span class="style10">Cart</span></td><strong></strong>      </tr>
-      
+      </tr>
+
       <?php
 	  if(isset($_GET['CategoryId']))
-	  { 
-      if(mysqli_num_rows($Recordset1) > 0){
-        do 
-	  { 
+	  {
+	  do
+	  {
 	  ?>
         <tr>
-         <td><?php echo $row_Recordset1['ItemId']; ?></td>
           <td><?php echo $row_Recordset1['ItemName']; ?></td>
           <td><?php echo $row_Recordset1['Description']; ?></td>
           <td><?php echo $row_Recordset1['Size']; ?></td>
-          <td><img src="../Products/<?php echo $row_Recordset1['Image']; ?>" height="84px" width="125px"/></td>
+          <td><img src="Products/<?php echo $row_Recordset1['Image']; ?>" height="125px" width="125px"/></td>
           <td><?php echo $row_Recordset1['Price']; ?></td>
           <td><?php echo $row_Recordset1['Discount']; ?></td>
           <td><?php echo $row_Recordset1['Total']; ?></td>
-           <td><a href="InsertCart.php?ItemId=<?php echo $row_Recordset1['ItemId']; ?>"><img src="img/shopping-cart.png"/></a></td><strong></strong>        </tr>
+        </tr>
         <?php } while ($row_Recordset1 = mysqli_fetch_assoc($Recordset1));
 		}
-  }
 		else
-		{ 
+		{
       if(mysqli_num_rows($Recordset2) > 0){
-		do 
-	  { 
+		do
+	  {
 	  ?>
         <tr>
-         <td><?php echo $row_Recordset2['ItemId']; ?></td>
           <td><?php echo $row_Recordset2['ItemName']; ?></td>
           <td><?php echo $row_Recordset2['Description']; ?></td>
           <td><?php echo $row_Recordset2['Size']; ?></td>
-          <td><img src="../Products/<?php echo $row_Recordset2['Image']; ?>" height="84px" width="125px"/></td>
+          <td><img src="Products/<?php echo $row_Recordset2['Image']; ?>" height="125px" width="125px"/></td>
           <td><?php echo $row_Recordset2['Price']; ?></td>
           <td><?php echo $row_Recordset2['Discount']; ?></td>
           <td><?php echo $row_Recordset2['Total']; ?></td>
-           <td><a href="InsertCart.php?ItemId=<?php echo $row_Recordset2['ItemId']; ?>"><img src="img/shopping-cart.png"/></a></td>
         </tr>
         <?php } while ($row_Recordset2 = mysqli_fetch_assoc($Recordset2));
-		}
+		}else{
+      echo "<tr><td colspan='7'><center>No Data</center</td></tr>";
+    }
   }
-        
+
         ?>
     </table>
     <table width="100%" border="0" cellspacing="3" cellpadding="3">
@@ -131,9 +125,9 @@ $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td><p><img src="img/Jeans.jpg" alt="box" width="67" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
-        <td><p><img src="img/asd.jpg" alt="box" width="67" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
-        <td><p><img src="img/images.jpg" alt="box" width="67" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
+        <td><p><img src="img/Jeans.jpg" alt="box" width="100" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
+        <td><p><img src="img/asd.jpg" alt="box" width="100" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
+        <td><p><img src="img/images.jpg" alt="box" width="100" height="100" hspace="10" align="left" class="imgleft" title="box" /></p></td>
       </tr>
       <tr>
         <td height="26" bgcolor="#BCE0A8"><div align="center" class="style9">Jeans</div></td>
@@ -151,7 +145,6 @@ $totalRows_Recordset2 = mysqli_num_rows($Recordset2);
  include "Footer.php";
  ?>
 </div>
-<blockquote>&nbsp;	</blockquote>
 </body>
 </html>
 <?php
